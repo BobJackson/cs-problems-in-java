@@ -7,11 +7,15 @@ public class CompressedGene {
     private int length;
 
     public CompressedGene(String gene) {
+        initLength(gene);
         compress(gene);
     }
 
+    private void initLength(String gene) {
+        this.length = gene.length();
+    }
+
     private void compress(String gene) {
-        length = gene.length();
         bitSet = new BitSet(length * 2);
         final String upperGene = gene.toUpperCase();
         for (int i = 0; i < length; i++) {
