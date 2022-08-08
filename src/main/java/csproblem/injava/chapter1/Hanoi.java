@@ -1,18 +1,19 @@
 package csproblem.injava.chapter1;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Hanoi {
     private final int numDiscs;
-    private final Stack<Integer> towerA = new Stack<>();
-    private final Stack<Integer> towerB = new Stack<>();
-    private final Stack<Integer> towerC = new Stack<>();
+    private final Deque<Integer> towerA = new ArrayDeque<>();
+    private final Deque<Integer> towerB = new ArrayDeque<>();
+    private final Deque<Integer> towerC = new ArrayDeque<>();
 
 
     public Hanoi(int discs) {
         this.numDiscs = discs;
         for (int i = 1; i <= discs; i++) {
-            towerA.push(i);
+            towerA.addFirst(i);
         }
     }
 
@@ -20,9 +21,9 @@ public class Hanoi {
         move(towerA, towerC, towerB, numDiscs);
     }
 
-    private static void move(Stack<Integer> begin, Stack<Integer> end, Stack<Integer> temp, int n) {
+    private static void move(Deque<Integer> begin, Deque<Integer> end, Deque<Integer> temp, int n) {
         if (n == 1) {
-            end.push(begin.pop());
+            end.addFirst(begin.removeFirst());
         } else {
             move(begin, temp, end, n - 1);
             move(begin, end, temp, 1);
@@ -30,15 +31,15 @@ public class Hanoi {
         }
     }
 
-    public Stack<Integer> getTowerA() {
+    public Deque<Integer> getTowerA() {
         return towerA;
     }
 
-    public Stack<Integer> getTowerB() {
+    public Deque<Integer> getTowerB() {
         return towerB;
     }
 
-    public Stack<Integer> getTowerC() {
+    public Deque<Integer> getTowerC() {
         return towerC;
     }
 }
