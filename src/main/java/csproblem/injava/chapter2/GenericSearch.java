@@ -78,7 +78,6 @@ public class GenericSearch {
                 frontier.offer(new Node<>(child, currentNode));
             }
         }
-
         return null;
     }
 
