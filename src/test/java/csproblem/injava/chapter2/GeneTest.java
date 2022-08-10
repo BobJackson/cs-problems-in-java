@@ -26,4 +26,16 @@ class GeneTest {
         assertFalse(gene.linearContains(gat));
     }
 
+    @Test
+    void should_contains_acg_when_binary_search() {
+        Gene.Codon acg = new Gene.Codon("ACG");
+        assertTrue(gene.binaryContains(acg));
+    }
+
+    @Test
+    void should_not_contains_gat_when_binary_search() {
+        Gene.Codon gat = new Gene.Codon("GAT");
+        assertFalse(gene.binaryContains(gat));
+    }
+
 }
