@@ -3,9 +3,10 @@ package csproblem.injava.chapter2;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public class Gene {
-    private List<Codon> codons = new ArrayList<>();
+    private final List<Codon> codons = new ArrayList<>();
 
     public Gene(String geneStr) {
         for (int i = 0; i < geneStr.length() - 3; i += 3) {
@@ -39,6 +40,19 @@ public class Gene {
             this.first = Nucleotide.valueOf(codonStr.substring(0, 1));
             this.second = Nucleotide.valueOf(codonStr.substring(1, 2));
             this.third = Nucleotide.valueOf(codonStr.substring(2, 3));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Codon codon = (Codon) o;
+            return first == codon.first && second == codon.second && third == codon.third;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(first, second, third);
         }
 
         @Override
