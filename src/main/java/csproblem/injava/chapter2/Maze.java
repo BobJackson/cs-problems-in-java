@@ -53,34 +53,34 @@ public class Maze {
 
     public List<MazeLocation> successors(MazeLocation ml) {
         List<MazeLocation> locations = new ArrayList<>();
-        if (canMoveRight(ml)) {
+        if (canMoveDown(ml)) {
             locations.add(new MazeLocation(ml.row + 1, ml.column));
         }
-        if (canMoveLeft(ml)) {
+        if (canMoveUp(ml)) {
             locations.add(new MazeLocation(ml.row - 1, ml.column));
         }
-        if (canMoveDown(ml)) {
+        if (canMoveRight(ml)) {
             locations.add(new MazeLocation(ml.row, ml.column + 1));
         }
-        if (canMoveUp(ml)) {
+        if (canMoveLeft(ml)) {
             locations.add(new MazeLocation(ml.row, ml.column - 1));
         }
         return locations;
     }
 
-    private boolean canMoveRight(MazeLocation ml) {
+    private boolean canMoveDown(MazeLocation ml) {
         return ml.row + 1 < rows && grid[ml.row + 1][ml.column] != Cell.BLACKED;
     }
 
-    private boolean canMoveLeft(MazeLocation ml) {
+    private boolean canMoveUp(MazeLocation ml) {
         return ml.row - 1 >= 0 && grid[ml.row - 1][ml.column] != Cell.BLACKED;
     }
 
-    private boolean canMoveDown(MazeLocation ml) {
+    private boolean canMoveRight(MazeLocation ml) {
         return ml.column + 1 < columns && grid[ml.row][ml.column + 1] != Cell.BLACKED;
     }
 
-    private boolean canMoveUp(MazeLocation ml) {
+    private boolean canMoveLeft(MazeLocation ml) {
         return ml.column - 1 >= 0 && grid[ml.row][ml.column - 1] != Cell.BLACKED;
     }
 
