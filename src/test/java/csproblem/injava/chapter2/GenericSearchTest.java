@@ -21,4 +21,9 @@ class GenericSearchTest {
         assertFalse(linearContains);
     }
 
+    @Test
+    void should_return_true_when_binary_contains() {
+        boolean binaryContains = GenericSearch.binaryContains(List.of("a", "b", "c", "d", "e"), "c");
+        assertTrue(binaryContains);
+    }
 }

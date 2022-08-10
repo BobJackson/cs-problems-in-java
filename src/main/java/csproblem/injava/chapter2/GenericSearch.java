@@ -15,4 +15,21 @@ public class GenericSearch {
         }
         return false;
     }
+
+    public static <T extends Comparable<T>> boolean binaryContains(List<T> list, T key) {
+        int low = 0;
+        int high = list.size() - 1;
+        while (low <= high) {
+            int middle = (low + high) / 2;
+            int comparison = list.get(middle).compareTo(key);
+            if (comparison < 0) {
+                low = middle + 1;
+            } else if (comparison > 0) {
+                high = middle - 1;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 }
