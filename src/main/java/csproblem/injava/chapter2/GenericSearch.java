@@ -91,7 +91,9 @@ public class GenericSearch {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Node<?> node = (Node<?>) o;
-            return Double.compare(node.cost, cost) == 0 && Double.compare(node.heuristic, heuristic) == 0 && state.equals(node.state) && parent.equals(node.parent);
+            return Double.compare(node.cost, cost) == 0
+                    && Double.compare(node.heuristic, heuristic) == 0
+                    && state.equals(node.state) && parent.equals(node.parent);
         }
 
         @Override
