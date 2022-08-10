@@ -121,6 +121,13 @@ public class Maze {
         System.out.println(maze);
 
         GenericSearch.Node<MazeLocation> solution = GenericSearch.dfs(maze.start, maze::goalTest, maze::successors);
+        printSolution(maze, solution);
+
+        GenericSearch.Node<MazeLocation> solutionTwo = GenericSearch.bfs(maze.start, maze::goalTest, maze::successors);
+        printSolution(maze, solutionTwo);
+    }
+
+    private static void printSolution(Maze maze, GenericSearch.Node<MazeLocation> solution) {
         if (solution == null) {
             System.out.println("No solution found using depth-first search!");
         } else {
