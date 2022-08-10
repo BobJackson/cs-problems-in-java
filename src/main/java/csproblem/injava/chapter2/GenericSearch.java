@@ -3,6 +3,7 @@ package csproblem.injava.chapter2;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
 
 public class GenericSearch {
 
@@ -76,6 +77,32 @@ public class GenericSearch {
                 }
                 explored.add(child);
                 frontier.offer(new Node<>(child, currentNode));
+            }
+        }
+        return null;
+    }
+
+    public static <T> Node<T> astar(T initial,
+                                    Predicate<T> goalTest,
+                                    Function<T, List<T>> successors,
+                                    ToDoubleFunction<T> heuristic) {
+        Queue<Node<T>> frontier = new PriorityQueue<>();
+        frontier.offer(new Node<>(initial, null, 0.0, heuristic.applyAsDouble(initial)));
+        Map<T, Double> explored = new HashMap<>();
+        explored.put(initial, 0.0);
+
+        while (!frontier.isEmpty()) {
+            Node<T> currentNode = frontier.poll();
+            T currentState = currentNode.state;
+            if (goalTest.test(currentState)) {
+                return currentNode;
+            }
+            for (T child : successors.apply(currentState)) {
+                double newCost = currentNode.cost + 1;
+                if (!explored.containsKey(child) || explored.get(child) > newCost) {
+                    explored.put(child, newCost);
+                    frontier.offer(new Node<>(child, currentNode, newCost, heuristic.applyAsDouble(child)));
+                }
             }
         }
         return null;

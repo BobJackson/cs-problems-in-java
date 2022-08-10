@@ -103,6 +103,12 @@ public class Maze {
         resetStartAndGoal();
     }
 
+    public double manhattanDistance(MazeLocation ml) {
+        int xdist = Math.abs(ml.column - goal.column);
+        int ydist = Math.abs(ml.row - goal.row);
+        return (xdist + ydist);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -125,6 +131,12 @@ public class Maze {
 
         GenericSearch.Node<MazeLocation> solutionTwo = GenericSearch.bfs(maze.start, maze::goalTest, maze::successors);
         printSolution(maze, solutionTwo);
+
+        GenericSearch.Node<MazeLocation> solutionThree = GenericSearch.astar(maze.start,
+                maze::goalTest,
+                maze::successors,
+                maze::manhattanDistance);
+        printSolution(maze, solutionThree);
     }
 
     private static void printSolution(Maze maze, GenericSearch.Node<MazeLocation> solution) {
