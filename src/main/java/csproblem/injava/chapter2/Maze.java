@@ -30,7 +30,11 @@ public class Maze {
     }
 
     public Maze() {
-        this(10, 10, new MazeLocation(0, 0), new MazeLocation(9, 9), 0.2);
+        this(10,
+                10,
+                new MazeLocation(0, 0),
+                new MazeLocation(9, 9),
+                0.2);
     }
 
     private void randomlyFill(double sparseness) {
