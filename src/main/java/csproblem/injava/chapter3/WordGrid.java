@@ -40,15 +40,6 @@ public class WordGrid {
     }
 
     public record GridLocation(int row, int column) {
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            GridLocation that = (GridLocation) o;
-            return row == that.row && column == that.column;
-        }
-
     }
 
     public void mark(String word, List<GridLocation> locations) {
