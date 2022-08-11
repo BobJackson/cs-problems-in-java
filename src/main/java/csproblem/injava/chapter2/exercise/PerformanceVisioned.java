@@ -2,7 +2,6 @@ package csproblem.injava.chapter2.exercise;
 
 import csproblem.injava.chapter2.GenericSearch;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -16,9 +15,7 @@ public class PerformanceVisioned {
     private static final int TARGET;
 
     static {
-        nums = new ArrayList<>(INITIAL_CAPACITY);
-        IntStream.range(0, INITIAL_CAPACITY).forEach(nums::add);
-
+        nums = IntStream.range(0, INITIAL_CAPACITY).boxed().toList();
         TARGET = new Random().nextInt(INITIAL_CAPACITY);
     }
 
