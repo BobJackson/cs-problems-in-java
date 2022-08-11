@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Maze {
-
     private final int rows;
+
     private final int columns;
     private final MazeLocation start;
     private final MazeLocation goal;
@@ -35,6 +35,23 @@ public class Maze {
                 new MazeLocation(0, 0),
                 new MazeLocation(9, 9),
                 0.2);
+    }
+
+    public static void main(String[] args) {
+        Maze maze = new Maze();
+        System.out.println(maze);
+
+        GenericSearch.Node<MazeLocation> solution = GenericSearch.dfs(maze.start, maze::goalTest, maze::successors);
+        printSolution(maze, solution);
+
+        GenericSearch.Node<MazeLocation> solutionTwo = GenericSearch.bfs(maze.start, maze::goalTest, maze::successors);
+        printSolution(maze, solutionTwo);
+
+        GenericSearch.Node<MazeLocation> solutionThree = GenericSearch.astar(maze.start,
+                maze::goalTest,
+                maze::successors,
+                maze::manhattanDistance);
+        printSolution(maze, solutionThree);
     }
 
     private void randomlyFill(double sparseness) {
@@ -121,23 +138,6 @@ public class Maze {
         return sb.toString();
     }
 
-
-    public static void main(String[] args) {
-        Maze maze = new Maze();
-        System.out.println(maze);
-
-        GenericSearch.Node<MazeLocation> solution = GenericSearch.dfs(maze.start, maze::goalTest, maze::successors);
-        printSolution(maze, solution);
-
-        GenericSearch.Node<MazeLocation> solutionTwo = GenericSearch.bfs(maze.start, maze::goalTest, maze::successors);
-        printSolution(maze, solutionTwo);
-
-        GenericSearch.Node<MazeLocation> solutionThree = GenericSearch.astar(maze.start,
-                maze::goalTest,
-                maze::successors,
-                maze::manhattanDistance);
-        printSolution(maze, solutionThree);
-    }
 
     private static void printSolution(Maze maze, GenericSearch.Node<MazeLocation> solution) {
         if (solution == null) {

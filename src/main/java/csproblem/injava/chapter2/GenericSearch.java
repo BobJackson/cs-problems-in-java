@@ -37,6 +37,7 @@ public class GenericSearch {
     }
 
     public static <T> Node<T> dfs(T initial, Predicate<T> goalTest, Function<T, List<T>> successors) {
+        int counter = 0;
         Deque<Node<T>> frontier = new ArrayDeque<>();
         frontier.push(new Node<>(initial, null));
         Set<T> explored = new HashSet<>();
@@ -46,9 +47,11 @@ public class GenericSearch {
             Node<T> currentNode = frontier.pop();
             T currentState = currentNode.state;
             if (goalTest.test(currentState)) {
+                System.out.println("dfs' count = " + counter);
                 return currentNode;
             }
             for (T child : successors.apply(currentState)) {
+                counter++;
                 if (explored.contains(child)) {
                     continue;
                 }
@@ -60,6 +63,7 @@ public class GenericSearch {
     }
 
     public static <T> Node<T> bfs(T initial, Predicate<T> goalTest, Function<T, List<T>> successors) {
+        int counter = 0;
         Queue<Node<T>> frontier = new LinkedList<>();
         frontier.offer(new Node<>(initial, null));
         Set<T> explored = new HashSet<>();
@@ -69,9 +73,11 @@ public class GenericSearch {
             Node<T> currentNode = frontier.poll();
             T currentState = currentNode.state;
             if (goalTest.test(currentState)) {
+                System.out.println("bfs' count = " + counter);
                 return currentNode;
             }
             for (T child : successors.apply(currentState)) {
+                counter++;
                 if (explored.contains(child)) {
                     continue;
                 }
@@ -86,6 +92,7 @@ public class GenericSearch {
                                     Predicate<T> goalTest,
                                     Function<T, List<T>> successors,
                                     ToDoubleFunction<T> heuristic) {
+        int counter = 0;
         Queue<Node<T>> frontier = new PriorityQueue<>();
         frontier.offer(new Node<>(initial, null, 0.0, heuristic.applyAsDouble(initial)));
         Map<T, Double> explored = new HashMap<>();
@@ -95,9 +102,11 @@ public class GenericSearch {
             Node<T> currentNode = frontier.poll();
             T currentState = currentNode.state;
             if (goalTest.test(currentState)) {
+                System.out.println("astar' count = " + counter);
                 return currentNode;
             }
             for (T child : successors.apply(currentState)) {
+                counter++;
                 double newCost = currentNode.cost + 1;
                 if (!explored.containsKey(child) || explored.get(child) > newCost) {
                     explored.put(child, newCost);
