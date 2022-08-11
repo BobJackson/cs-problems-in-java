@@ -32,23 +32,32 @@ public class MapColoringConstraint extends Constraint<Regions, Colors> {
         for (Regions variable : variables) {
             domains.put(variable, List.of(RED, GREEN, BLUE));
         }
-        CSP<Regions, Colors> csp = new CSP<>(variables, domains);
-        csp.addConstraint(new MapColoringConstraint(WESTERN_AUSTRALIA, NORTHERN_TERRITORY));
-        csp.addConstraint(new MapColoringConstraint(WESTERN_AUSTRALIA, SOUTH_AUSTRALIA));
-        csp.addConstraint(new MapColoringConstraint(SOUTH_AUSTRALIA, NORTHERN_TERRITORY));
-        csp.addConstraint(new MapColoringConstraint(QUEENSLAND, NORTHERN_TERRITORY));
-        csp.addConstraint(new MapColoringConstraint(QUEENSLAND, SOUTH_AUSTRALIA));
-        csp.addConstraint(new MapColoringConstraint(QUEENSLAND, NEW_SOUTH_WALES));
-        csp.addConstraint(new MapColoringConstraint(NEW_SOUTH_WALES, SOUTH_AUSTRALIA));
-        csp.addConstraint(new MapColoringConstraint(VICTORIA, SOUTH_AUSTRALIA));
-        csp.addConstraint(new MapColoringConstraint(VICTORIA, NEW_SOUTH_WALES));
-        csp.addConstraint(new MapColoringConstraint(VICTORIA, TASMANIA));
-
+        CSP<Regions, Colors> csp = initRegionsColorsCSP(variables, domains);
         Map<Regions, Colors> solution = csp.backtrackingSearch();
         if (solution.isEmpty()) {
             System.out.println("No solution found!");
         } else {
             System.out.println(solution);
         }
+    }
+
+    private static CSP<Regions, Colors> initRegionsColorsCSP(List<Regions> variables,
+                                                             Map<Regions, List<Colors>> domains) {
+        CSP<Regions, Colors> csp = new CSP<>(variables, domains);
+        addConstraint(csp, WESTERN_AUSTRALIA, NORTHERN_TERRITORY);
+        addConstraint(csp, WESTERN_AUSTRALIA, SOUTH_AUSTRALIA);
+        addConstraint(csp, SOUTH_AUSTRALIA, NORTHERN_TERRITORY);
+        addConstraint(csp, QUEENSLAND, NORTHERN_TERRITORY);
+        addConstraint(csp, QUEENSLAND, SOUTH_AUSTRALIA);
+        addConstraint(csp, QUEENSLAND, NEW_SOUTH_WALES);
+        addConstraint(csp, NEW_SOUTH_WALES, SOUTH_AUSTRALIA);
+        addConstraint(csp, VICTORIA, SOUTH_AUSTRALIA);
+        addConstraint(csp, VICTORIA, NEW_SOUTH_WALES);
+        addConstraint(csp, VICTORIA, TASMANIA);
+        return csp;
+    }
+
+    private static void addConstraint(CSP<Regions, Colors> csp, Regions one, Regions another) {
+        csp.addConstraint(new MapColoringConstraint(one, another));
     }
 }
