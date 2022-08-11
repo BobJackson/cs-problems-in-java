@@ -4,18 +4,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapColoringConstraint extends Constraint<String, String> {
-    private final String place1;
-    private final String place2;
+import static csproblem.injava.chapter3.Colors.*;
+import static csproblem.injava.chapter3.Regions.*;
 
-    protected MapColoringConstraint(String place1, String place2) {
+public class MapColoringConstraint extends Constraint<Regions, Colors> {
+    private final Regions place1;
+    private final Regions place2;
+
+    protected MapColoringConstraint(Regions place1, Regions place2) {
         super(List.of(place1, place2));
         this.place1 = place1;
         this.place2 = place2;
     }
 
     @Override
-    public boolean satisfied(Map<String, String> assignment) {
+    public boolean satisfied(Map<Regions, Colors> assignment) {
         if (!assignment.containsKey(place1) || !assignment.containsKey(place2)) {
             return true;
         }
@@ -23,25 +26,25 @@ public class MapColoringConstraint extends Constraint<String, String> {
     }
 
     public static void main(String[] args) {
-        List<String> variables = List.of("Western Australia", "Northern Territory", "South Australia",
-                "Queensland", "New South Wales", "Victoria", "Tasmania");
-        Map<String, List<String>> domains = new HashMap<>();
-        for (String variable : variables) {
-            domains.put(variable, List.of("red", "green", "blue"));
+        List<Regions> variables = List.of(WESTERN_AUSTRALIA, NORTHERN_TERRITORY, SOUTH_AUSTRALIA,
+                QUEENSLAND, NEW_SOUTH_WALES, VICTORIA, TASMANIA);
+        Map<Regions, List<Colors>> domains = new HashMap<>();
+        for (Regions variable : variables) {
+            domains.put(variable, List.of(RED, GREEN, BLUE));
         }
-        CSP<String, String> csp = new CSP<>(variables, domains);
-        csp.addConstraint(new MapColoringConstraint("Western Australia", "Northern Territory"));
-        csp.addConstraint(new MapColoringConstraint("Western Australia", "South Australia"));
-        csp.addConstraint(new MapColoringConstraint("South Australia", "Northern Territory"));
-        csp.addConstraint(new MapColoringConstraint("Queensland", "Northern Territory"));
-        csp.addConstraint(new MapColoringConstraint("Queensland", "South Australia"));
-        csp.addConstraint(new MapColoringConstraint("Queensland", "New South Wales"));
-        csp.addConstraint(new MapColoringConstraint("New South Wales", "South Australia"));
-        csp.addConstraint(new MapColoringConstraint("Victoria", "South Australia"));
-        csp.addConstraint(new MapColoringConstraint("Victoria", "New South Wales"));
-        csp.addConstraint(new MapColoringConstraint("Victoria", "Tasmania"));
+        CSP<Regions, Colors> csp = new CSP<>(variables, domains);
+        csp.addConstraint(new MapColoringConstraint(WESTERN_AUSTRALIA, NORTHERN_TERRITORY));
+        csp.addConstraint(new MapColoringConstraint(WESTERN_AUSTRALIA, SOUTH_AUSTRALIA));
+        csp.addConstraint(new MapColoringConstraint(SOUTH_AUSTRALIA, NORTHERN_TERRITORY));
+        csp.addConstraint(new MapColoringConstraint(QUEENSLAND, NORTHERN_TERRITORY));
+        csp.addConstraint(new MapColoringConstraint(QUEENSLAND, SOUTH_AUSTRALIA));
+        csp.addConstraint(new MapColoringConstraint(QUEENSLAND, NEW_SOUTH_WALES));
+        csp.addConstraint(new MapColoringConstraint(NEW_SOUTH_WALES, SOUTH_AUSTRALIA));
+        csp.addConstraint(new MapColoringConstraint(VICTORIA, SOUTH_AUSTRALIA));
+        csp.addConstraint(new MapColoringConstraint(VICTORIA, NEW_SOUTH_WALES));
+        csp.addConstraint(new MapColoringConstraint(VICTORIA, TASMANIA));
 
-        Map<String, String> solution = csp.backtrackingSearch();
+        Map<Regions, Colors> solution = csp.backtrackingSearch();
         if (solution == null) {
             System.out.println("No solution found!");
         } else {
