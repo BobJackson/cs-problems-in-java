@@ -3,11 +3,11 @@ package csproblem.injava.chapter3;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Constrains<V, D> {
+public abstract class Constraint<V, D> {
 
     protected List<V> variables;
 
-    protected Constrains(List<V> variables) {
+    protected Constraint(List<V> variables) {
         this.variables = variables;
     }
 
