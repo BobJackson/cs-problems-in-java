@@ -4,14 +4,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class WordGrid {
 
     private static final char ALPHABET_LENGTH = 26;
     private static final char FIRST_LETTER = 'A';
-    private static final Random random = init();
+    public static final Random RANDOM = init();
 
     private static Random init() {
         SecureRandom secureRandom;
@@ -34,21 +33,13 @@ public class WordGrid {
         grid = new char[rows][columns];
         for (int row = 0; row < rows; row++) {
             for (int column = 0; column < columns; column++) {
-                char randomLetter = (char) (random.nextInt(ALPHABET_LENGTH) + FIRST_LETTER);
+                char randomLetter = (char) (RANDOM.nextInt(ALPHABET_LENGTH) + FIRST_LETTER);
                 grid[row][column] = randomLetter;
             }
         }
     }
 
-    public static class GridLocation {
-
-        public final int row;
-        public final int column;
-
-        public GridLocation(int row, int column) {
-            this.row = row;
-            this.column = column;
-        }
+    public record GridLocation(int row, int column) {
 
         @Override
         public boolean equals(Object o) {
@@ -56,11 +47,6 @@ public class WordGrid {
             if (o == null || getClass() != o.getClass()) return false;
             GridLocation that = (GridLocation) o;
             return row == that.row && column == that.column;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(row, column);
         }
 
     }
