@@ -45,7 +45,7 @@ public class MapColoringConstraint extends Constraint<Regions, Colors> {
         csp.addConstraint(new MapColoringConstraint(VICTORIA, TASMANIA));
 
         Map<Regions, Colors> solution = csp.backtrackingSearch();
-        if (solution == null) {
+        if (solution.isEmpty()) {
             System.out.println("No solution found!");
         } else {
             System.out.println(solution);

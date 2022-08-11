@@ -49,12 +49,12 @@ public class CSP<V, D> {
             localAssignment.put(unassigned, value);
             if (consistent(unassigned, localAssignment)) {
                 Map<V, D> result = backtrackingSearch(localAssignment);
-                if (result != null) {
+                if (!result.isEmpty()) {
                     return result;
                 }
             }
         }
-        return null;
+        return Map.of();
     }
 
     public Map<V, D> backtrackingSearch() {
