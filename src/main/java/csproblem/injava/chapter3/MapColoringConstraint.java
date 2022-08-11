@@ -1,6 +1,6 @@
 package csproblem.injava.chapter3;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +28,7 @@ public class MapColoringConstraint extends Constraint<Regions, Colors> {
     public static void main(String[] args) {
         List<Regions> variables = List.of(WESTERN_AUSTRALIA, NORTHERN_TERRITORY, SOUTH_AUSTRALIA,
                 QUEENSLAND, NEW_SOUTH_WALES, VICTORIA, TASMANIA);
-        Map<Regions, List<Colors>> domains = new HashMap<>();
+        Map<Regions, List<Colors>> domains = new EnumMap<>(Regions.class);
         for (Regions variable : variables) {
             domains.put(variable, List.of(RED, GREEN, BLUE));
         }
