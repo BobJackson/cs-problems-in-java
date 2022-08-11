@@ -44,20 +44,20 @@ public class CSP<V, D> {
             return assignment;
         }
         V unassigned = variables.stream().filter(v -> !assignment.containsKey(v)).findFirst().orElseThrow();
-        for (D value : domains.get(unassigned)){
+        for (D value : domains.get(unassigned)) {
             HashMap<V, D> localAssignment = new HashMap<>(assignment);
             localAssignment.put(unassigned, value);
-            if(consistent(unassigned, localAssignment)){
+            if (consistent(unassigned, localAssignment)) {
                 Map<V, D> result = backtrackingSearch(localAssignment);
-                if(result != null){
-                    return  result;
+                if (result != null) {
+                    return result;
                 }
             }
         }
         return null;
     }
 
-    public Map<V, D> backtrackingSearch(){
+    public Map<V, D> backtrackingSearch() {
         return backtrackingSearch(new HashMap<>());
     }
 }
