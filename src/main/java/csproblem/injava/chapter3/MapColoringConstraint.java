@@ -34,11 +34,7 @@ public class MapColoringConstraint extends Constraint<Regions, Colors> {
         }
         CSP<Regions, Colors> csp = initRegionsColorsCSP(variables, domains);
         Map<Regions, Colors> solution = csp.backtrackingSearch();
-        if (solution.isEmpty()) {
-            System.out.println("No solution found!");
-        } else {
-            System.out.println(solution);
-        }
+        csp.printSolution(solution);
     }
 
     private static CSP<Regions, Colors> initRegionsColorsCSP(List<Regions> variables,

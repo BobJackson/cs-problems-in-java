@@ -60,4 +60,12 @@ public class CSP<V, D> {
     public Map<V, D> backtrackingSearch() {
         return backtrackingSearch(new HashMap<>());
     }
+
+    void printSolution(Map<? extends V, ? extends D> solution) {
+        if (solution.isEmpty()) {
+            System.out.println("No solution found!");
+        } else {
+            System.out.println(solution);
+        }
+    }
 }

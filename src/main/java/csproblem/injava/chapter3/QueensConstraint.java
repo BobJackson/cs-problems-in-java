@@ -42,10 +42,6 @@ public class QueensConstraint extends Constraint<Integer, Integer> {
         CSP<Integer, Integer> csp = new CSP<>(columns, rows);
         csp.addConstraint(new QueensConstraint(columns));
         Map<Integer, Integer> solution = csp.backtrackingSearch();
-        if (solution.isEmpty()) {
-            System.out.println("No solution found!");
-        } else {
-            System.out.println(solution);
-        }
+        csp.printSolution(solution);
     }
 }
