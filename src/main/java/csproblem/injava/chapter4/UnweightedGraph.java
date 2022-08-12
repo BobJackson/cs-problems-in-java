@@ -1,5 +1,7 @@
 package csproblem.injava.chapter4;
 
+import csproblem.injava.chapter2.GenericSearch;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +31,24 @@ public class UnweightedGraph<V> extends Graph<V, Edge> {
         UnweightedGraph<City> cityGraph = new UnweightedGraph<>(
                 Arrays.stream(City.values()).toList()
         );
+        initCityGraph(cityGraph);
+
+        System.out.println(cityGraph);
+
+        GenericSearch.Node<City> bfsResult = GenericSearch.bfs(BOSTON,
+                v -> v.equals(MIAMI),
+                v -> cityGraph.neighborsOf(cityGraph.indexOf(v)));
+
+        if (bfsResult == null) {
+            System.out.println("No solution found using breadth-first search!");
+        } else {
+            List<City> path = GenericSearch.nodeToPath(bfsResult);
+            System.out.println("Path from Boston to Miami:");
+            System.out.println(path);
+        }
+    }
+
+    private static void initCityGraph(UnweightedGraph<City> cityGraph) {
         cityGraph.addEdge(SEATTLE, CHICAGO);
         cityGraph.addEdge(SEATTLE, SAN_FRANCISCO);
         cityGraph.addEdge(SAN_FRANCISCO, RIVERSIDE);
@@ -55,8 +75,6 @@ public class UnweightedGraph<V> extends Graph<V, Edge> {
         cityGraph.addEdge(BOSTON, NEW_YORK);
         cityGraph.addEdge(NEW_YORK, PHILADELPHIA);
         cityGraph.addEdge(PHILADELPHIA, WASHINGTON);
-
-        System.out.println(cityGraph);
     }
 
 }
