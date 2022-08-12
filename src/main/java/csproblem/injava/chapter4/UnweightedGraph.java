@@ -37,7 +37,7 @@ public class UnweightedGraph<V> extends Graph<V, Edge> {
 
         GenericSearch.Node<City> bfsResult = GenericSearch.bfs(BOSTON,
                 v -> v.equals(MIAMI),
-                v -> cityGraph.neighborsOf(cityGraph.indexOf(v)));
+                cityGraph::neighborsOf);
 
         if (bfsResult == null) {
             System.out.println("No solution found using breadth-first search!");
