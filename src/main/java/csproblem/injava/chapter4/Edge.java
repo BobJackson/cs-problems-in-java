@@ -1,8 +1,8 @@
 package csproblem.injava.chapter4;
 
 public class Edge {
-    final int u;
-    final int v;
+    protected final int u;
+    protected final int v;
 
     public Edge(int u, int v) {
         this.u = u;
