@@ -2,6 +2,8 @@ package csproblem.injava.chapter4;
 
 import java.util.*;
 import java.util.function.IntConsumer;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static csproblem.injava.chapter4.City.*;
 
@@ -79,6 +81,84 @@ public class WeightedGraph<V> extends Graph<V, WeightedEdge> {
         return path.stream().mapToDouble(WeightedEdge::getWeight).sum();
     }
 
+    public record DijkstraNode(int vertex, double distance) implements Comparable<DijkstraNode> {
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            DijkstraNode that = (DijkstraNode) o;
+            return vertex == that.vertex && Double.compare(that.distance, distance) == 0;
+        }
+
+        @Override
+        public int compareTo(DijkstraNode other) {
+            Double mine = distance;
+            Double theirs = other.distance;
+            return mine.compareTo(theirs);
+        }
+    }
+
+    public static final class DijkstraResult {
+        public final double[] distances;
+        public final Map<Integer, WeightedEdge> pathMap;
+
+        public DijkstraResult(double[] distances, Map<Integer, WeightedEdge> pathMap) {
+            this.distances = distances;
+            this.pathMap = pathMap;
+        }
+    }
+
+    public DijkstraResult dijkstra(V root) {
+        int first = indexOf(root);
+        double[] distances = new double[getVertexCount()];
+        distances[first] = 0;
+        boolean[] visited = new boolean[getVertexCount()];
+        visited[first] = true;
+
+        Map<Integer, WeightedEdge> pathMap = new HashMap<>();
+        Queue<DijkstraNode> pq = new PriorityQueue<>();
+        pq.offer(new DijkstraNode(first, 0));
+
+        while (!pq.isEmpty()) {
+            int u = pq.poll().vertex;
+            double distU = distances[u];
+            for (WeightedEdge we : edgeOf(u)) {
+                double distV = distances[we.v];
+                double pathWeight = we.getWeight() + distU;
+                if (!visited[we.v] || distV > pathWeight) {
+                    visited[we.v] = true;
+                    distances[we.v] = pathWeight;
+                    pathMap.put(we.v, we);
+                    pq.offer(new DijkstraNode(we.v, pathWeight));
+                }
+            }
+        }
+
+        return new DijkstraResult(distances, pathMap);
+    }
+
+    public Map<V, Double> distanceArrayToDistanceMap(double[] distances) {
+        return IntStream.range(0, distances.length)
+                .boxed()
+                .collect(Collectors.toMap(this::vertexAt, i -> distances[i], (a, b) -> b));
+    }
+
+    public static List<WeightedEdge> pathMapToPath(int start, int end, Map<Integer, WeightedEdge> pathMap) {
+        if (pathMap.isEmpty()) {
+            return List.of();
+        }
+        List<WeightedEdge> path = new LinkedList<>();
+        WeightedEdge edge = pathMap.get(end);
+        path.add(edge);
+        while (edge.u != start) {
+            edge = pathMap.get(edge.u);
+            path.add(edge);
+        }
+        Collections.reverse(path);
+        return path;
+    }
+
     public static void main(String[] args) {
         WeightedGraph<City> cityGraph2 = new WeightedGraph<>(
                 Arrays.stream(City.values()).toList()
@@ -89,6 +169,21 @@ public class WeightedGraph<V> extends Graph<V, WeightedEdge> {
 
         List<WeightedEdge> mst = cityGraph2.mst(0);
         cityGraph2.printWeightedPath(mst);
+
+        System.out.println();
+
+        DijkstraResult dijkstraResult = cityGraph2.dijkstra(LOS_ANGELES);
+        Map<City, Double> nameDistance = cityGraph2.distanceArrayToDistanceMap(dijkstraResult.distances);
+        System.out.printf("Distances from %s:%n", LOS_ANGELES);
+        nameDistance.forEach((name, distance) -> System.out.println(name + " : " + distance));
+
+        System.out.println();
+
+        System.out.printf("Shortest path from %s to %s:%n", LOS_ANGELES, BOSTON);
+        List<WeightedEdge> path = pathMapToPath(cityGraph2.indexOf(LOS_ANGELES),
+                cityGraph2.indexOf(BOSTON),
+                dijkstraResult.pathMap);
+        cityGraph2.printWeightedPath(path);
     }
 
     private static void initCityGraph(WeightedGraph<City> cityGraph) {
