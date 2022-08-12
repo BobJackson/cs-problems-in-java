@@ -44,7 +44,7 @@ public abstract class Graph<V, E extends Edge> {
         return edges.get(index)
                 .stream()
                 .map(edge -> vertexAt(edge.v))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<E> edgeOf(int index) {
