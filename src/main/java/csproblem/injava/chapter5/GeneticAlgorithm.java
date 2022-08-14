@@ -34,7 +34,7 @@ public class GeneticAlgorithm<C extends Chromosome<C>> {
             if (best.fitness() >= threshold) {
                 return best;
             }
-            System.out.printf("Generation %d  Best %.2f Avg %.2f",
+            System.out.printf("Generation %d  Best %.2f Avg %.2f %n",
                     generation,
                     best.fitness(),
                     population.stream().mapToDouble(C::fitness).average().orElse(0.0));
@@ -67,8 +67,11 @@ public class GeneticAlgorithm<C extends Chromosome<C>> {
             } else {
                 nextPopulation.addAll(parents);
             }
-            population = nextPopulation;
         }
+        if (nextPopulation.size() > population.size()) {
+            nextPopulation.remove(0);
+        }
+        population = nextPopulation;
     }
 
     private void mutate() {
