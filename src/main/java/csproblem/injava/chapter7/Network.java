@@ -71,29 +71,29 @@ public class Network<T> {
         }
     }
 
+    public Results validate(List<double[]> inputs, List<T> expecteds, Function<double[], T> interpret) {
+        int correct = 0;
+        for (int i = 0; i < inputs.size(); i++) {
+            double[] input = inputs.get(i);
+            T expected = expecteds.get(i);
+            T result = interpret.apply(outputs(input));
+            if (result.equals(expected)) {
+                correct++;
+            }
+        }
+        double percentage = (double) correct / inputs.size();
+        return new Results(correct, inputs.size(), percentage);
+    }
+
     public class Results {
-        private final int correct;
-        private final int trials;
-        private final double percentage;
+        public final int correct;
+        public final int trials;
+        public final double percentage;
 
         public Results(int correct, int trials, double percentage) {
             this.correct = correct;
             this.trials = trials;
             this.percentage = percentage;
-        }
-
-        public Results validate(List<double[]> inputs, List<T> expecteds, Function<double[], T> interpret) {
-            int correct = 0;
-            for (int i = 0; i < inputs.size(); i++) {
-                double[] input = inputs.get(i);
-                T expected = expecteds.get(i);
-                T result = interpret.apply(outputs(input));
-                if (result.equals(expected)) {
-                    correct++;
-                }
-            }
-            double percentage = (double) correct / inputs.size();
-            return new Results(correct, inputs.size(), percentage);
         }
     }
 }
