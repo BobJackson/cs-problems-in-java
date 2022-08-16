@@ -50,9 +50,9 @@ public class Layer {
             int index = i;
             double[] nextWeights = nextLayer.neurons.stream().mapToDouble(n -> n.weights[index]).toArray();
             double[] nextDeltas = nextLayer.neurons.stream().mapToDouble(n -> n.delta).toArray();
-            double sumWeightsAndDetals = Util.dotProduct(nextWeights, nextDeltas);
+            double sumWeightsAndDeltas = Util.dotProduct(nextWeights, nextDeltas);
             neurons.get(i).delta = neurons.get(i).derivativeActivationFunction.applyAsDouble(
-                    neurons.get(i).outputCache) * sumWeightsAndDetals;
+                    neurons.get(i).outputCache) * sumWeightsAndDeltas;
         }
     }
 }

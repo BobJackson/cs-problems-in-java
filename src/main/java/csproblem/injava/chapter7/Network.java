@@ -47,7 +47,7 @@ public class Network<T> {
     private double[] outputs(double[] input) {
         double[] result = input;
         for (Layer layer : layers) {
-            result = layer.outputs(input);
+            result = layer.outputs(result);
         }
         return result;
     }
