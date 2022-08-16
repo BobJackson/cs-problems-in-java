@@ -1,14 +1,17 @@
 package csproblem.injava.chapter7;
 
-import java.io.BufferedReader;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public final class Util {
 
@@ -45,10 +48,11 @@ public final class Util {
     }
 
     public static List<String[]> loadCSV(String filename) {
-        try (InputStream inputStream = Util.class.getResourceAsStream(filename)) {
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            return bufferedReader.lines().map(line -> line.split(",")).collect(Collectors.toList());
+        try {
+            return FileUtils.readLines(new File(filename), UTF_8)
+                    .stream()
+                    .map(line -> line.split(","))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage(), e);

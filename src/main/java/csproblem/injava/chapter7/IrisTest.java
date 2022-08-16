@@ -9,13 +9,14 @@ public class IrisTest {
     public static final String IRIS_SETOSA = "Iris-setose";
     public static final String IRIS_VERSICOLOR = "Iris-versicolor";
     public static final String IRIS_VIRGINICA = "Iris-virginica";
+    public static final String IRIS_CSV_PATH = "/Users/bob/Documents/practice/cs-problems-in-java/src/main/java/csproblem/injava/chapter7/data/iris.csv";
 
     private List<double[]> irisParameters = new ArrayList<>();
     private List<double[]> irisClassifications = new ArrayList<>();
     private List<String> irisSpecies = new ArrayList<>();
 
     public IrisTest() {
-        List<String[]> irisDataset = Util.loadCSV("/csproblem/injava/chapter7/data/iris.csv");
+        List<String[]> irisDataset = Util.loadCSV(IRIS_CSV_PATH);
         Collections.shuffle(irisDataset);
         for (String[] iris : irisDataset) {
             double[] parameters = Arrays.stream(iris).limit(4).mapToDouble(Double::parseDouble).toArray();
