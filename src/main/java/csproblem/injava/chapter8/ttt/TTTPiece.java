@@ -1,4 +1,6 @@
-package csproblem.injava.chapter8;
+package csproblem.injava.chapter8.ttt;
+
+import csproblem.injava.chapter8.Piece;
 
 public enum TTTPiece implements Piece {
     X, O, E;

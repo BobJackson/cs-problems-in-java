@@ -1,4 +1,7 @@
-package csproblem.injava.chapter8;
+package csproblem.injava.chapter8.c4;
+
+import csproblem.injava.chapter8.Board;
+import csproblem.injava.chapter8.Piece;
 
 import java.util.ArrayList;
 import java.util.Arrays;

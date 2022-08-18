@@ -1,4 +1,4 @@
-package csproblem.injava.chapter8;
+package csproblem.injava.chapter8.c4;
 
 public class C4Location {
     public final int column;

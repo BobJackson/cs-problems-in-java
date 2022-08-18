@@ -1,15 +1,17 @@
-package csproblem.injava.chapter8;
+package csproblem.injava.chapter8.c4;
+
+import csproblem.injava.chapter8.Minimax;
 
 import java.util.Scanner;
 
-public class TicTacToe {
-    private TTTBoard board = new TTTBoard();
+public class ConnectFour {
+    private C4Board board = new C4Board();
     private final Scanner scanner = new Scanner(System.in);
 
     private Integer getPlayerMove() {
         int playerMove = -1;
         while (!board.getLegalMoves().contains(playerMove)) {
-            System.out.println("Enter a legal square (0-8):");
+            System.out.println("Enter a legal column (0-6):");
             playerMove = scanner.nextInt();
         }
         return playerMove;
@@ -26,7 +28,7 @@ public class TicTacToe {
                 System.out.println("Draw!");
                 break;
             }
-            Integer computerMove = Minimax.findBestMove(board, 9);
+            Integer computerMove = Minimax.findBestMove(board, 5);
             System.out.println("Computer move is " + computerMove);
             board = board.move(computerMove);
             System.out.println(board);
@@ -41,6 +43,6 @@ public class TicTacToe {
     }
 
     public static void main(String[] args) {
-        new TicTacToe().runGame();
+        new ConnectFour().runGame();
     }
 }

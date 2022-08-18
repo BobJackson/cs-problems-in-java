@@ -1,4 +1,6 @@
-package csproblem.injava.chapter8;
+package csproblem.injava.chapter8.c4;
+
+import csproblem.injava.chapter8.Piece;
 
 public enum C4Piece implements Piece {
     B, R, E;
