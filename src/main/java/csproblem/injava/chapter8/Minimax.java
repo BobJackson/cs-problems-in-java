@@ -6,7 +6,7 @@ public class Minimax {
         double bestEval = Double.NEGATIVE_INFINITY;
         Move bestMove = null;
         for (Move move : board.getLegalMoves()) {
-            double result = minimax(board.move(move), false, board.getTurn(), maxDepth);
+            double result = alphabeta(board.move(move), false, board.getTurn(), maxDepth);
             if (result > bestEval) {
                 bestEval = result;
                 bestMove = move;
