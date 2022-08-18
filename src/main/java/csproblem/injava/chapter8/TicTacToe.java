@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class TicTacToe {
     private TTTBoard board = new TTTBoard();
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     private Integer getPlayerMove() {
         int playerMove = -1;
