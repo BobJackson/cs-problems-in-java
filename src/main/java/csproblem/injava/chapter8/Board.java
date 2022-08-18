@@ -12,7 +12,7 @@ public interface Board <Move>{
     boolean isWin();
 
     default boolean isDraw(){
-        return !isWin() || getLegalMoves().isEmpty();
+        return !isWin() && getLegalMoves().isEmpty();
     }
 
     double evaluate(Piece player);
